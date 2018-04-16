@@ -45,7 +45,7 @@
 - minimise integrations, understand and protect against compromised 3rd parties (e.g. a script sourced from an untrusted 3rd party could be malicious) 
 - favour small components with a clear, [single responsibility](https://blog.8thlight.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html)
 - favour using established libraries and frameworks over rolling your own. However, import only trustworthy software and always verify its integrity
-- avoid the use of shared variables / [globals](http://programmers.stackexchange.com/questions/148108/why-is-global-state-so-evil)
+- minimise the use of shared variables / [globals](http://programmers.stackexchange.com/questions/148108/why-is-global-state-so-evil)
 - prefer [immutability](http://miles.no/blogg/why-care-about-functional-programming-part-1-immutability)
 - avoid nulls by using [Option](https://en.wikipedia.org/wiki/Option_type) e.g. [Scala Option](http://danielwestheide.com/blog/2012/12/19/the-neophytes-guide-to-scala-part-5-the-option-type.html) and [Java Optional](http://onelineatatime.io/optional-guava-and-java-8/)
 
@@ -54,14 +54,15 @@
 - be careful using &lt;script src&gt; unless you have complete control over the script that is loaded
 - if submitting a form modifies data or stage, use POST not GET
 - avoid [SQL injection](https://www.owasp.org/index.php/SQL_Injection_Prevention_Cheat_Sheet) / javascript injection by ensuring all queries are [parameterised](https://www.owasp.org/index.php/Query_Parameterization_Cheat_Sheet) (and / or use e.g. an [ORM](https://en.wikipedia.org/wiki/Object-relational_mapping), [Active Record](http://www.martinfowler.com/eaaCatalog/activeRecord.html))
-- protect against cross site scripting [(XSS)](https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet) by escaping / sanitising untrusted data using a standard security encoding library. Also consider using [Content Security Policy] (https://w3c.github.io/webappsec-csp/2/) headers to whitelist assets a page can load
+- protect against cross site scripting [(XSS)](https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet) by escaping / sanitising untrusted data using a standard security encoding library
+- consider using [Content Security Policy](https://w3c.github.io/webappsec-csp/2/) headers to whitelist assets a page can load with e.g. default-src, script-src, style-src, img-src, form-action, media-src	 etc.	 
 - protect against cross site request forgery [(CSRF)](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)) which target state-changing requests. Check standard headers to verify the request is same origin AND check a CSRF token
-- ensure that resources you load are as expected by using [subresource integrity](https://www.w3.org/TR/SRI/)
+- ensure that resources you load are as expected by using [subresource integrity](https://www.w3.org/TR/SRI/) to mitigate attacks e.g. on CDNs by specifying a base64-encoded cryptographic hash of a resource (file) you’re telling the browser to fetch
 - use HTTP Strict Transport Security [(HSTS)](https://www.owasp.org/index.php/HTTP_Strict_Transport_Security_Cheat_Sheet) with e.g. a "Strict-Transport-Security: max-age=8640000; includeSubDomains" HTTP Header to protected against SSL strip attacks. Consider entering your domain into the [HSTS preload list](https://hstspreload.appspot.com/)
 - protect against [clickjacking](https://www.owasp.org/index.php/Clickjacking_Defense_Cheat_Sheet) by using the "X-Frame-Options: DENY" HTTP Header
 - Don’t use [JSONP](http://stackoverflow.com/questions/3839966/can-anyone-explain-what-jsonp-is-in-layman-terms) to send sensitive data. Since JSONP is valid JavaScript, it’s not protected by the same-origin policy
 - do not eval any non-verified String (e.g. don't eval a String expected to contain JSON - use JSON.parse instead)
-- do not store session ids in [LocalStorage](https://www.sitepoint.com/html5-local-storage-revisited/). Think carefully before putting any sensitive data in local storage, even when encrypted
+- think carefully before putting any sensitive data in [LocalStorage](https://www.sitepoint.com/html5-local-storage-revisited/), even when encrypted
 - prefer sessionStorage to localStorage if persistence longer than the browser session is not required
 - validate URLs passed to XMLHttpRequest.open (browsers allow these to be cross-domain)
 - only use [WebSockets](http://www.html5rocks.com/en/tutorials/websockets/basics/) over TLS (wss://) and be aware that communication can be spoofed / hijacked through XSS
@@ -88,7 +89,7 @@
 - web applications must use a properly configured Web Application Firewall [(WAF)](https://www.owasp.org/index.php/Web_Application_Firewall) e.g. [NAXSI](https://github.com/nbs-system/naxsi)
 - remove unnecessary functionality and code
 - if exceptions occur, fail securely
-- monitor metrics e.g. [Sysdig](http://www.sysdig.org/)
+- monitor metrics e.g. with [Cloudwatch](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html) or [Prometheus](https://prometheus.io/)
 - create audit for successful and unsuccessful login attempts, unsuccessful authorisation attempts, logouts etc.
 - disable unused [HTTP methods](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html)
 - restrict all applications and services to running with the minimum set of privileges / permissions
@@ -100,11 +101,11 @@
 - server-side validation of all inputs, including headers, cookies, redirects
 - prefer to [accept known good](https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet) input rather than [reject known bad](https://www.owasp.org/index.php/Data_Validation#Reject_known_bad) input
 - sanitise input if necessary (e.g. strip out whitespace or hyphens from phone numbers)
-- ensure option selects, checkbox and radio contain only allowable (given) values
+- ensure  select list option, checkbox and radio inputs contain only allowable (given) values
 - validate data type / length / range / allowed chars
 - always re-validate previously entered form data in case it has been surreptitiously altered; hidden fields should be validated too
 - all validation failures should result in input rejection with an appropriate message to the user
-- have automated tests to check a reasonable range of validation failures are as expected
+- ensure a variety of validation scenarios operate as expected via test automation
 
 
 ## Error handling and logging
@@ -118,26 +119,25 @@
 
 ## Data protection
 
-- do not store passwords, connection strings etc. in plain text
+- do not store passwords or connection strings in plain text
 - understand the data that will be used, its retention and removal policy
-- understand who will be accessing the service / data, with what devices via what networks / 3rd party services
-- only store and use the minimum amount of data required to fulfil the user need; allow users to view only the data they need
+- understand who will be accessing the data, with what devices and via which networks and 3rd party services
+- only store and use the minimum amount of data required to fulfil the user need; show users only the data they need
 - don't (provide interfaces that) allow arbitrary querying of data
 - don't allow download of bulk data-sets or too much data to be visible on a page
 - rate limit access to large data-sets and record access attempts (also limit the number of transactions a user or device can perform in a given time period)
-- enforce use of database schemas, even for noSQL databases by using e.g. [Mongoose](http://mongoosejs.com/docs/guide.html) for MongoDB
+- use database schemas even for noSQL databases e.g. [Mongoose](http://mongoosejs.com/docs/guide.html) for MongoDB
 - avoid caching data within services unless necessary
 - protect caches / temp files containing sensitive data from unauthorised usage and purge them ASAP
 - use synchronous cryptography (shared secret) e.g. [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) to encrypt / decrypt your own data if its sensitive.
-- Ensure a shared key is held securely and separately to the data, preferably in a separate key vault (e.g. [Vault](https://www.vaultproject.io/)) that your service can access when it needs a key
-- use a key management process e.g. leveraging [Amazon KMS](https://aws.amazon.com/kms/)
+- ensure shared keys are held securely and separately to the data
+- use a key management service such as [Amazon KMS](https://aws.amazon.com/kms/) or [Azure Vault](https://azure.microsoft.com/en-gb/services/key-vault/)
 - encrypt backups (you will need to know which keys are required to handle which version)
 - encode fields that have especially sensitive values
 - disable autocomplete on forms for sensitive fields
 - not transmit any sensitive information within the URL
 - disable client-side caching for pages containing sensitive data by using appropriate [HTTP cache headers](https://www.keycdn.com/blog/http-cache-headers/) i.e. "Cache-Control: no-store", "Expires: 0" and "Pragma: no-cache"
 - anonymise data (ensuring re-identification cannot take place) sent to reporting tools or being used as test data
-- consider encrypting partially completed forms under a key held by the user if you do not need to use this data
 - applications should connect to databases with different credentials for each trust distinction e.g. user, read-only, admin, guest
 
 ## Authentication / authorisation

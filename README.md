@@ -248,19 +248,29 @@ OWASP provide some tools for this, which includes a command line tool as well as
     - [helmet](https://github.com/helmetjs/helmet)
     - [node security project](https://nodesecurity.io/) [nsp on GitHub](https://github.com/nodesecurity/nsp)
 
-## Useful resources and books
-
+## Useful resources
 - [National Cyber Security Centre Secure Development Practices Guide](https://github.com/ukncsc/secure-development-and-deployment/)
 - [OWASP Top 10 Project](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project)
-- [Web Application Security - A Beginner's Guide](https://www.mhprofessional.com/product.php?isbn=0071776168)
-- [Identity and Data Security for Web Developers](http://shop.oreilly.com/product/0636920044376.do)
 - [The Web Application Hacker's Handbook](http://eu.wiley.com/WileyCDA/WileyTitle/productCd-1118026470.html)
 - [HTTP protocol security considerations](https://www.w3.org/Protocols/rfc2616/rfc2616-sec15.html)
-- [OWASP cheat sheets](https://www.owasp.org/images/9/9a/OWASP_Cheatsheets_Book.pdf)
+- [OWASP cheat sheets](https://www.owasp.org/index.php/OWASP_Cheat_Sheet_Series)
 - [OWASP secure coding practices](https://www.owasp.org/images/0/08/OWASP_SCP_Quick_Reference_Guide_v2.pdf)
+- [NSCS Implementing Cloud Security Principles](https://www.ncsc.gov.uk/guidance/implementing-cloud-security-principles)
+- [OWASP AppSensor Project](https://www.owasp.org/index.php/OWASP_AppSensor_Project)
+- [GOV.UK Email Security Standards](https://www.gov.uk/government/publications/email-security-standards)
 - [CESG Enterprise security decisions](https://www.cesg.gov.uk/guidance/security-considerations-common-enterprise-it-decisions)
 - [CESG password guidance](https://www.cesg.gov.uk/guidance/password-guidance-simplifying-your-approach)
 - [CESG 10 steps to cyber security](https://www.cesg.gov.uk/10-steps-cyber-security)
 - [CESG Protecting bulk and personal data](https://www.cesg.gov.uk/guidance/protecting-bulk-personal-data)
 - [CESG Security Design Principles for Digital Services](https://www.cesg.gov.uk/guidance/security-design-principles-digital-services-0)
 - [CESG TLS guidance for external services](https://www.cesg.gov.uk/guidance/transport-layer-security-tls-external-facing-services)
+
+## Useful books
+- [Agile Application Security](http://shop.oreilly.com/product/0636920045106.do)
+- [Secure By Design](https://www.manning.com/books/secure-by-design)
+- [Identity and Data Security for Web Development](http://shop.oreilly.com/product/0636920044376.do)
+- [Practical Cloud Security](https://www.safaribooksonline.com/library/view/practical-cloud-security/9781492037507/)
+- [Crafting The InfoSec Playbook](http://shop.oreilly.com/product/0636920032991.do)
+- [Web Application Security - A Beginner's Guide](https://www.mhprofessional.com/product.php?isbn=0071776168)
+
+

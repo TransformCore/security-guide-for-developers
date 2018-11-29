@@ -17,7 +17,8 @@
   - [Web services - API keys, JWTs, CORS](#web-service-security)
   - [Communication security - TLS](#communication-security)
 - [Automated security testing](#automated-security-testing)
-- [Resources](#useful-resources-and-books)
+- [Resources](#useful-resources)
+- [Books](#useful-books)
 
 # Really important stuff!
 - don’t put live data on any local device unless it has been signed off for such usage
